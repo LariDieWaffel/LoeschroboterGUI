@@ -3,7 +3,7 @@ import processing.serial.*;
 
 Serial port;
 
-ControlP5 cp5; //erstellt ein Window
+ControlP5 cp5; //erstellt ein Fenster
 
 PFont fontBtn;
 PFont textFont;
