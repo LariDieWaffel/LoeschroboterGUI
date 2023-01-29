@@ -14,15 +14,18 @@ void setup ()
   size (1000, 800); //Windowsize, (Breite, Höhre)
   
   printArray(Serial.list()); //Gibt alle möglichen Ports aus
+
   
-  port = new Serial(this, "COM3", 9600); //legt serial port fest
+  //String portName = Serial.list()[3];
+  
+  //port = new Serial(this, "COM3", 9600); //legt serial port fest
   
   cp5 = new ControlP5(this); 
   
   fontBtn = createFont("calibri light", 25); //legt die Eigenschaften der Schrift der Btns fest
   
   cp5.addButton("Wasser") //erstellt einen neuen Button namens "Wasser"
-    .setPosition(400, 350) //Position der Ecke links Oben (x, y)
+    .setPosition(750, 650) //Position der Ecke links Oben (x, y)
     .setSize(200, 100) //Größe (Breite, Höhe)
     .setFont(fontBtn) //setzt die Schriftgröße auf das bei der Variable angegeben
     .setColorBackground(color(#00ADB3)) //verändert die Hintergrundfarbe des Buttons (r, g, b)
@@ -33,18 +36,18 @@ void setup ()
     .setPosition(650, 350)
     .setSize(200,100)
     .setFont(fontBtn)
-    .setColorBackground(color(250, 0, 0))
-    .setColorForeground(color(255, 102, 0))
-    .setColorActive(color(250, 0, 0))
+    .setColorBackground(color(255, 102, 0))
+    .setColorForeground(color(250, 0, 0))
+    .setColorActive(color(255, 102, 0))
   ;
   
   cp5.addButton("Links")
     .setPosition(150, 350)
     .setSize(200,100)
     .setFont(fontBtn)
-    .setColorBackground(color(250, 0, 0))
-    .setColorForeground(color(255, 102, 0))
-    .setColorActive(color(250, 0, 0))
+    .setColorBackground(color(255, 102, 0))
+    .setColorForeground(color(250, 0, 0))
+    .setColorActive(color(255, 102, 0))
   ;
   
   cp5.addButton("Vor")
@@ -56,13 +59,22 @@ void setup ()
     .setColorActive(color(255, 102, 0))
   ;
   
-  cp5.addButton("Stop")
+  cp5.addButton("Zurück")
     .setPosition(400, 500)
     .setSize(200,100)
     .setFont(fontBtn)
     .setColorBackground(color(255, 102, 0))
     .setColorForeground(color(250, 0, 0))
     .setColorActive(color(255, 102, 0))
+  ;
+  
+  cp5.addButton("Stopp")
+    .setPosition(400, 350)
+    .setSize(200,100)
+    .setFont(fontBtn)
+    .setColorBackground(color(250, 0, 0))
+    .setColorForeground(color(255, 102, 0))
+    .setColorActive(color(250, 0, 0))
   ;
   
   //Btns für die Wasserstandsanzeige
@@ -105,12 +117,6 @@ void setup ()
   .setColorActive(color(0, 102, 0))
   ;
 }
-
-/*void serialEvent (Serial port)
-{
-  
-}
-*/
 
 void draw()
 {
@@ -167,7 +173,7 @@ void draw()
       }
       
       //Wenn mehr als 50% Wasser vorhanden ist, sendet die IDE "n", woraufhin das GUI 4 Buttons erstellt, wo vorher die grünen waren, wo die oberen schwarz und die untern gelb sind
-    if(val == 'n')
+    else if(val == 'n')
       {
       cp5.addButton("Wasserstand")
       .setPosition(750, 50)
@@ -207,7 +213,7 @@ void draw()
       }
       
       //Wenn mehr als 50% Wasser vorhanden ist, sendet die IDE "m", woraufhin das GUI 4 Buttons erstellt, wo vorher die gelben und schwarzen waren, wo die oberen 3 schwarz und der untere rot ist.
-    if(val == 'm')
+    else if(val == 'm')
       {
       cp5.addButton("Wasserstand")
       .setPosition(750, 50)
@@ -252,6 +258,7 @@ void draw()
 }
 
 
+
 void Wasser()  //erstellt funk für den Btn Wasser
 {
   port.write('q');  //gibt an Ardunio 'q', was dort dann die Pumpe auslöst
@@ -272,7 +279,12 @@ void Vor()
   port.write('w');
 }
 
-void Stop()
+void Zurück()
 {
   port.write('s');
 } 
+
+void Stop()
+{
+  port.write('e');
+}
